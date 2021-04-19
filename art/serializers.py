@@ -1,10 +1,26 @@
 from rest_framework import serializers
-from .models import Student, Artwork
+from .models import Artwork, Student
 
 
-class StudentSerializer(serializers.HyperlinkedModelSerializer):
-    songs = serializers.HyperlinkedRelatedField(
-        view_name='song_detail',
-        many=True,
+class ArtworkSerializer(serializers.ModelSerializer):
+    student_name = serializers.StringRelatedField(
+        source='student',
         read_only=True
     )
+
+    student_id = serializers.PrimaryKeyRelatedField(
+        queryset=Student.objects.all(), source='student')
+
+    class Meta:
+        model = Artwork
+        fields = ('id', 'title', 'artwork_image', 'price', 'pulication_date',
+                  'student_name', 'student_id', )
+
+
+class StudentSerializer(serializers.ModelSerializer):
+    artworks = ArtworkSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Student
+        fields = ('id', 'name', 'avatar', 'school',
+                  'graduation_year', 'personal_story', 'artworks',)
