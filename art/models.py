@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 from datetime import date
+from student_users.models import Studentuser
 
 
 def current_year():
@@ -28,6 +29,8 @@ class Artwork(models.Model):
     pulication_date = models.DateField(default=date.today, blank=True)
     student = models.ForeignKey(
         Student, on_delete=models.CASCADE, related_name='artworks')
+    owner = models.ForeignKey(
+        Studentuser, related_name='owned_artworks', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title
