@@ -1,13 +1,19 @@
 from django.db import models
+from django.core.validators import MaxValueValidator, MinValueValidator
 from datetime import date
+
+
+def current_year():
+    return date.today().year
 
 
 class Student(models.Model):
     name = models.CharField(max_length=100)
     avatar = models.ImageField(
-        upload_to='images/avatars', blank=True, default='images/avatar/noavatardefault.jpeg')
+        upload_to='images/avatars', blank=True, default='images/avatars/noavatardefault.jpeg')
     school = models.CharField(max_length=150)
-    graduation_year = models.PositiveSmallIntegerField()
+    graduation_year = models.PositiveSmallIntegerField(
+        default=current_year, validators=[MinValueValidator(2019), MaxValueValidator(2030)])
     personal_story = models.TextField()
 
     def __str__(self):
