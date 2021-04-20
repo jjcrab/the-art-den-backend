@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,6 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-8xj)56(r2w5(bff4w@sfjig3dsm%hr3x)xh@zce=c*l-nfrnrs'
+# SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -46,6 +49,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
 
     'art',
+    'student_users',
 ]
 
 MIDDLEWARE = [
@@ -95,6 +99,9 @@ DATABASES = {
         'PORT': 5432,
     }
 }
+# DATABASES = {
+#     'default': dj_database_url.config(conn_max_age=600)
+# }
 
 
 # Password validation
@@ -135,15 +142,38 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
+# MEDIA_ROOT = '/Users/jingjingli/desktop/sei/projects/project4/the-art-den-backend/media'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+DJOSER = {
+    'LOGIN_FIELD': 'email',
+    'USER_CREATE_PASSWORD_RETYPE': True,
+    'SERIALIZERS': {
+        'user_create': 'student_users.serializers.UserCreateSerializer',
+        'user': 'student_users.serializers.UserCreateSerializer'
+    }
+}
+
 REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        # What we'll use for our API
+        'rest_framework.authentication.TokenAuthentication',
+        # What we'll use for the browseable API
+        'rest_framework.authentication.SessionAuthentication',
+        # Basic Authentication should be removed in production
+        'rest_framework.authentication.BasicAuthentication',
+    ],
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
 }
+
+AUTH_USER_MODEL = 'student_users.Studentuser'
