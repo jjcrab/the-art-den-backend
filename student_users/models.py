@@ -5,7 +5,7 @@ from django.core.exceptions import ValidationError
 
 def validate_edu_email_address(email):
     if not email.endswith('.edu'):
-        raise forms.ValidationError("Only .edu email addresses allowed")
+        raise ValidationError("Only .edu email addresses allowed")
 
 
 class Studentuser(AbstractUser):

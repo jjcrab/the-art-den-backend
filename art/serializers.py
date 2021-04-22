@@ -13,8 +13,8 @@ class ArtworkSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Artwork
-        fields = ('id', 'title', 'artwork_image', 'price', 'pulication_date',
-                  'student_name', 'student_id', )
+        fields = ('id', 'title', 'artwork_image', 'price', 'publication_date',
+                  'student_name', 'student_id',)
 
 
 class StudentSerializer(serializers.ModelSerializer):

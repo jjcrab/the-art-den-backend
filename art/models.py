@@ -26,11 +26,11 @@ class Artwork(models.Model):
     artwork_image = models.ImageField(
         upload_to='images/artworks', blank=True, default='images/artworks/noImageAvailable.jpeg')
     price = models.DecimalField(max_digits=12, decimal_places=2)
-    pulication_date = models.DateField(default=date.today, blank=True)
+    publication_date = models.DateField(default=date.today, blank=True)
     student = models.ForeignKey(
         Student, on_delete=models.CASCADE, related_name='artworks')
     owner = models.ForeignKey(
-        Studentuser, related_name='owned_artworks', on_delete=models.CASCADE)
+        Studentuser, blank=True, related_name='owned_artworks', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title
