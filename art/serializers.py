@@ -19,8 +19,12 @@ class ArtworkSerializer(serializers.ModelSerializer):
 
 class StudentSerializer(serializers.ModelSerializer):
     artworks = ArtworkSerializer(many=True, read_only=True)
+    studentuser_email = serializers.StringRelatedField(
+        source='studentuser_account',
+        read_only=True
+    )
 
     class Meta:
         model = Student
         fields = ('id', 'name', 'avatar', 'school',
-                  'graduation_year', 'personal_story', 'artworks',)
+                  'graduation_year', 'personal_story', 'artworks', 'studentuser_account', 'studentuser_email')

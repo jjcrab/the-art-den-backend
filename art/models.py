@@ -16,6 +16,8 @@ class Student(models.Model):
     graduation_year = models.PositiveSmallIntegerField(
         default=current_year, validators=[MinValueValidator(2019), MaxValueValidator(2030)])
     personal_story = models.TextField()
+    studentuser_account = models.OneToOneField(
+        Studentuser, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name

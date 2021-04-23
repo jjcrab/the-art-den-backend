@@ -34,3 +34,15 @@ class StudentuserViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         user = self.request.user
         return Artwork.objects.filter(owner=self.request.user)
+
+
+class ProfileViewSet(viewsets.ModelViewSet):
+    serializer_class = StudentSerializer
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(studentuser_account=self.request.user)
+
+    def get_queryset(self):
+        user = self.request.user
+        return Student.objects.filter(studentuser_account=self.request.user)
