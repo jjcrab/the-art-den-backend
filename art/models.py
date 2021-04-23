@@ -30,7 +30,7 @@ class Artwork(models.Model):
     student = models.ForeignKey(
         Student, on_delete=models.CASCADE, related_name='artworks')
     owner = models.ForeignKey(
-        Studentuser, blank=True, related_name='owned_artworks', on_delete=models.CASCADE)
+        Studentuser, related_name='owned_artworks', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title

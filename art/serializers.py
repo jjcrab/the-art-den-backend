@@ -14,7 +14,7 @@ class ArtworkSerializer(serializers.ModelSerializer):
     class Meta:
         model = Artwork
         fields = ('id', 'title', 'artwork_image', 'price', 'publication_date',
-                  'student_name', 'student_id',)
+                  'student_name', 'student_id', 'owner')
 
 
 class StudentSerializer(serializers.ModelSerializer):
