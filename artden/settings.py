@@ -12,16 +12,15 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
-import environ
+# import environ
 import dj_database_url
-import django_heroku
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-env = environ.Env()
-environ.Env.read_env()
+# env = environ.Env()
+# environ.Env.read_env()
 SECRET_KEY = os.environ.get('SECRET_KEY')
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -93,19 +92,19 @@ WSGI_APPLICATION = 'artden.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'artden',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'postgresdb',
-        'PORT': 5432,
-    }
-}
 # DATABASES = {
-#     'default': dj_database_url.config(conn_max_age=600)
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'artden',
+#         'USER': 'postgres',
+#         'PASSWORD': 'postgres',
+#         'HOST': 'postgresdb',
+#         'PORT': 5432,
+#     }
 # }
+DATABASES = {
+    'default': dj_database_url.config(conn_max_age=600)
+}
 
 
 # Password validation
@@ -145,7 +144,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 
-# STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
 # STATIC_URL = '/static/'
 # MEDIA_ROOT = '/Users/jingjingli/desktop/sei/projects/project4/the-art-den-backend/media'
@@ -159,7 +158,8 @@ AWS_DEFAULT_ACL = 'public-read'
 AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
 AWS_LOCATION = 'static'
 STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/'
-STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+# STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+AWS_QUERYSTRING_AUTH = False
 
 
 # MEDIA_URL = '/media/'
