@@ -4,7 +4,9 @@ services:
   django:
     build: .
     container_name: art-den-back
-    command: gunicorn --bind :8000 --workers 3 artden.wsgi:application
+    # command: gunicorn artden.wsgi:application --bind 0.0.0.0:$PORT
+    # command: gunicorn --bind :8000 --workers 3 artden.wsgi:application
+    command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/usr/src/app
     ports:

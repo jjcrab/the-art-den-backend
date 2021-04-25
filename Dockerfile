@@ -1,14 +1,22 @@
 FROM python:3
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-COPY requirements.txt ./
+COPY requirements.txt /app/requirements.txt
 RUN set -ex \
-    && pip3 install --upgrade pip \
-    && pip3 install --no-cache-dir -r requirements.txt
+    && pip install --upgrade pip \
+    && pip install --no-cache-dir -r /app/requirements.txt
 
-ADD . .
+COPY . /app/
+
+# RUN python manage.py makemigrations
+# RUN python manage.py migrate
+
+
+
+# CMD gunicorn artden.wsgi:application --bind 0.0.0.0:$PORT
+# CMD python3 manage.py runserver 0.0.0.0:$PORT
